@@ -5,14 +5,29 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 using DevJobsAPI.Data;
+using DevJobsAPI.Services.Interfaces;
+using DevJobsAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddUserSecrets<Program>();
+// Load User Secrets Before Anything Else
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string"
-        + "'DefaultConnection' not found.");
+// Debugging: Print all loaded configuration values
+Console.WriteLine("Loaded Configuration Values:");
+foreach (var configItem in builder.Configuration.AsEnumerable())
+{
+    Console.WriteLine($"{configItem.Key} = {configItem.Value}");
+}
 
+
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string"
+//        + "'DefaultConnection' not found.");
+var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"]
+    ?? throw new InvalidOperationException("? Connection string 'DefaultConnection' not found.");
 // Add required NuGet packages
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString,
@@ -36,6 +51,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddScoped<IJobService, JobService>();
+
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -56,3 +73,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// **Required for Integration Tests**
+public partial class Program { }

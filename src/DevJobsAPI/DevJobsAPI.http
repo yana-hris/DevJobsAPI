@@ -1,0 +1,55 @@
+@DevJobsAPI_HostAddress = http://localhost:5130
+
+### Get all jobs
+GET {{DevJobsAPI_HostAddress}}/api/jobs
+Accept: application/json
+
+### Get a single Job by id
+GET {{DevJobsAPI_HostAddress}}/api/jobs/1
+Accept: application/json
+
+
+### Create a New Job (POST)
+POST {{DevJobsAPI_HostAddress}}/api/jobs
+Content-Type: application/json
+
+{
+    "title": "Test Job Title",
+    "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. AeT",
+    "company": "Test Corp.",
+    "location": "Varna, Bulgaria",
+    "minExperience": 0,
+    "maxExperience": 2,
+    "workMode": 2,
+    "level": 1,
+    "jobType": 1,
+    "salary": 2500.00,
+    "employerId": 1
+}
+
+### Update an Existing Job (PATCH)
+PUT {{DevJobsAPI_HostAddress}}/api/jobs/3
+Content-Type: application/json
+
+{
+    "id": 3,
+    "title": "Edited Job Title",
+    "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. AeT",
+    "company": "Test Corp.",
+    "location": "Edited, Bulgaria",
+    "minExperience": 0,
+    "maxExperience": 2,
+    "workMode": 2,
+    "level": 1,
+    "jobType": 1,
+    "salary": 2500.00,
+    "employerId": 1
+}
+
+### Delete a Job (DELETE)
+DELETE {{DevJobsAPI_HostAddress}}/api/jobs/3
+
+
+
+
+

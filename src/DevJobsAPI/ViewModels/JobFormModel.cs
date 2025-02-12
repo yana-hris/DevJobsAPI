@@ -4,6 +4,8 @@
 
     public class JobFormModel
     {
+        public long? Id { get; set; }
+
         [Required]
         [StringLength(150, MinimumLength = 5, ErrorMessage = "Title must be between 5 and 150 characters.")]
         public string Title { get; set; } = null!;
