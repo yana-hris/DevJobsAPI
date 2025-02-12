@@ -91,7 +91,7 @@
 
             if (jobToUpdate == null)
             {
-                throw new ArgumentNullException("Job not found");
+                throw new ArgumentNullException(nameof(model.Id), "Job not found");
             }
 
             jobToUpdate.Title = model.Title;
@@ -117,7 +117,7 @@
 
             if (jobToDelete == null)
             {
-                throw new ArgumentNullException("Job not found.");
+                throw new ArgumentNullException(nameof(id), "Job not found.");
             }
 
             context.Jobs.Remove(jobToDelete);
